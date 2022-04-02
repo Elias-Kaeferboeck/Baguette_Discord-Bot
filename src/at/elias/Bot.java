@@ -89,6 +89,9 @@ public class Bot extends ListenerAdapter {
     public void onReady(@NotNull ReadyEvent event) {
         this.ready = true;
         new CustomLogger("Main", "Received ReadyEvent").send();
+
+        new Manager().createTable("test");
+        new Manager().createTable("playerinfo");
     }
 
     @Override

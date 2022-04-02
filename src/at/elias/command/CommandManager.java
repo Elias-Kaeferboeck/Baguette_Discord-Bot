@@ -3,6 +3,7 @@ package at.elias.command;
 import at.elias.Bot;
 import at.elias.command.bdo.BdoBossCommand;
 import at.elias.command.bdo.GearScoreCommand;
+import at.elias.command.bdo.gearInfo.GearCommand;
 import at.elias.command.utility.AvatarCommand;
 import at.elias.command.utility.GuildInfoCommand;
 import at.elias.command.utility.HelpCommand;
@@ -52,6 +53,20 @@ public class CommandManager extends ListenerAdapter {
         guild.upsertCommand("guildinfo", "Displays Information about the current Guild").queue();
         guild.upsertCommand("bdoboss", "Tells you the upcoming Worldboss in the Region you choose").addOption(OptionType.STRING, "region", "The Region you want to look up. Valid Arguments are: eu, na, jp, kr, mena, ru, sa, sea, th, tw").queue();
         guild.upsertCommand("gs", "Calculates your Gearscore based on your Ap, Awakening Ap and Dp").addOption(OptionType.INTEGER, "ap", "Your regular Ap").addOption(OptionType.INTEGER, "aap", "Your awakening Ap").addOption(OptionType.INTEGER, "dp", "Your regular Dp").queue();
+        guild.upsertCommand("gear", "Enter and Safe the Stats of your Gear in BDO").
+                addOption(OptionType.STRING, "familyname", "What is your Family's Name?").
+                addOption(OptionType.STRING, "charactername", "What is your Character's Name?").
+                addOption(OptionType.STRING, "note", "Any Note you want to add").
+                addOption(OptionType.INTEGER, "ap", "What is your AP?").
+                addOption(OptionType.INTEGER, "aap", "What is your Awakening AP?").
+                addOption(OptionType.INTEGER, "dp", "What is your DP?").
+                addOption(OptionType.INTEGER, "accuracy", "What is your Accuracy?").
+                addOption(OptionType.INTEGER, "evasion", "What is your Evasion?").
+                addOption(OptionType.INTEGER, "dr", "What is your Damage Reduction?").
+                addOption(OptionType.INTEGER, "hp", "How much HP does your Character have?").
+                addOption(OptionType.INTEGER, "level", "What is the Level of your Character?").
+                addOption(OptionType.STRING, "class", "What Class do you play?").
+                addOption(OptionType.BOOLEAN, "awakening", "Do you Play awakening?").queue();
 
         registerCommand(new BdoBossCommand());
         registerCommand(new GearScoreCommand());
@@ -59,6 +74,7 @@ public class CommandManager extends ListenerAdapter {
         registerCommand(new GuildInfoCommand());
         registerCommand(new UserInfoCommand());
         registerCommand(new HelpCommand());
+        registerCommand(new GearCommand());
     }
 
     private static void registerCommand(Command command) {
