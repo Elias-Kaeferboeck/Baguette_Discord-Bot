@@ -4,6 +4,8 @@ import at.elias.command.CommandManager;
 import at.elias.misc.Constants;
 import at.elias.misc.CustomLogger;
 import at.elias.misc.FileUtil;
+import at.elias.sql.Manager;
+import at.elias.sql.SQLAPI;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -28,6 +30,8 @@ public class Bot extends ListenerAdapter {
     public Bot() {
 
         bypassStuck();
+
+        new SQLAPI();
 
         login();
 
