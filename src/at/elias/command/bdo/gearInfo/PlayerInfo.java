@@ -5,8 +5,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 
-import java.time.temporal.TemporalAccessor;
-
 public class PlayerInfo {
     private User owner;
 
@@ -175,22 +173,21 @@ public class PlayerInfo {
     public MessageEmbed toEmbed() {
         EmbedBuilder eb = new EmbedBuilder();
         eb.setThumbnail(getOwner().getAvatarUrl());
-        eb.setTitle(getFamilyName() + " (" + getCharacterName() + ")");
-        eb.addField("Level", getLevel() + "", true);
+        eb.setTitle((getFamilyName().equalsIgnoreCase("0") ? "?" : getFamilyName()) + " (" + (getCharacterName().equalsIgnoreCase("0") ? "?" : getCharacterName()) + ")");
+        eb.addField("Level", (getLevel() == 0 ? "?" : getLevel()) + "", true);
         eb.addField("Class", getPlayerClass().getDisplayNames()[0], true);
         eb.addField("Awakening?", Boolean.toString(isAwakening()), true);
-        eb.addField("AP", getAp() + "", true);
-        eb.addField("Awakening AP", getAap() + "", true);
-        eb.addField("DP", getDp() + "", true);
-        eb.addField("Accuracy", getAccuracy() + "", true);
-        eb.addField("Evasion", getEvasion() + "", true);
-        eb.addField("Damage Reduction", getDamageReduction() + "", true);
-        eb.addField("Gearscore", getGs() + "", true);
+        eb.addField("AP", (getAp() == 0 ? "?" : getAp()) + "", true);
+        eb.addField("Awakening AP", (getAap() == 0 ? "?" : getAap()) + "", true);
+        eb.addField("DP", (getDp() == 0 ? "?" : getDp()) + "", true);
+        eb.addField("Accuracy", (getAccuracy() == 0 ? "?" : getAccuracy()) + "", true);
+        eb.addField("Evasion", (getEvasion() == 0 ? "?" : getEvasion()) + "", true);
+        eb.addField("Damage Reduction", (getDamageReduction() == 0 ? "?" : getDamageReduction()) + "", true);
+        eb.addField("Gearscore", (getGs() <= 1 ? "?" : getGs()) + "", true);
         eb.addBlankField(true);
-        eb.addField("HP", getHp() + "", true);
-        eb.addField("Additional Note", getNote(), false);
-
-
+        eb.addField("HP", (getHp() == 0 ? "?" : getHp()) + "", true);
+        if (getNote().equalsIgnoreCase("0"))
+            eb.addField("Additional Note", getNote(), false);
         return eb.build();
     }
 
