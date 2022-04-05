@@ -22,16 +22,6 @@ public class Manager {
         }
     }
 
-    public void setString(String id, String table, String type, String value) {
-        try {
-            new SqlManager().setString(id, table, type, value);
-        } catch (Exception e) {
-            SQLAPI.getInstance().getMySQL().disconnectFromMySQL();
-            SQLAPI.getInstance().getMySQL().connectToMySQL();
-            setString(id, table, type, value);
-        }
-    }
-
     public String getString(String id, String table, String type) {
         try {
             return new SqlManager().getString(id, table, type);
@@ -39,6 +29,16 @@ public class Manager {
             SQLAPI.getInstance().getMySQL().disconnectFromMySQL();
             SQLAPI.getInstance().getMySQL().connectToMySQL();
             return getString(id, table, type);
+        }
+    }
+
+    public void setString(String id, String table, String type, String value) {
+        try {
+            new SqlManager().setString(id, table, type, value);
+        } catch (Exception e) {
+            SQLAPI.getInstance().getMySQL().disconnectFromMySQL();
+            SQLAPI.getInstance().getMySQL().connectToMySQL();
+            setString(id, table, type, value);
         }
     }
 }
