@@ -4,6 +4,7 @@ import at.elias.Bot;
 import at.elias.command.bdo.BdoBossCommand;
 import at.elias.command.bdo.GearScoreCommand;
 import at.elias.command.bdo.gearInfo.GearCommand;
+import at.elias.command.nsfw.HentaiCommand;
 import at.elias.command.utility.AvatarCommand;
 import at.elias.command.utility.GuildInfoCommand;
 import at.elias.command.utility.HelpCommand;
@@ -66,7 +67,9 @@ public class CommandManager extends ListenerAdapter {
                 addOption(OptionType.INTEGER, "hp", "How much HP does your Character have?").
                 addOption(OptionType.INTEGER, "level", "What is the Level of your Character?").
                 addOption(OptionType.STRING, "class", "What Class do you play?").
-                addOption(OptionType.BOOLEAN, "awakening", "Do you Play awakening?").queue();
+                addOption(OptionType.BOOLEAN, "awakening", "Do you Play awakening?").
+                addOption(OptionType.USER, "target", "The Person you want to see the gear of").queue();
+        guild.upsertCommand("hentai", "You know what this does ;)").queue();
 
         registerCommand(new BdoBossCommand());
         registerCommand(new GearScoreCommand());
@@ -75,6 +78,7 @@ public class CommandManager extends ListenerAdapter {
         registerCommand(new UserInfoCommand());
         registerCommand(new HelpCommand());
         registerCommand(new GearCommand());
+        registerCommand(new HentaiCommand());
     }
 
     private static void registerCommand(Command command) {
@@ -96,7 +100,10 @@ public class CommandManager extends ListenerAdapter {
                     } catch (IllegalStateException ignored) {
                     }
                 } else {
-                    event.reply("This Command is NSFW-Channel only").queue();
+                    try {
+                        event.reply("This Command is NSFW-Channel only").complete();
+                    } catch (Exception ignored) {
+                    }
                 }
             }
         }

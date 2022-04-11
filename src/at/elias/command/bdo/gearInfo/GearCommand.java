@@ -17,74 +17,85 @@ public class GearCommand extends Command {
     public void execute(SlashCommandInteractionEvent event, InteractionHook response) {
         User user = event.getUser();
         createUser(user.getId());
-        PlayerInfo playerInfo = new PlayerInfo(user).load();
+        PlayerInfo playerInfo;
+
+        boolean canChange;
 
         try {
-            playerInfo.setFamilyName(event.getOption("familyname").getAsString());
-        } catch (NullPointerException ignored) {
+            playerInfo = new PlayerInfo(event.getOption("target").getAsUser()).load();
+            canChange = false;
+        } catch (NullPointerException e) {
+            playerInfo = new PlayerInfo(user).load();
+            canChange = true;
+        }
+        if (canChange) {
+            try {
+                playerInfo.setFamilyName(event.getOption("familyname").getAsString());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setCharacterName(event.getOption("charactername").getAsString());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setNote(event.getOption("note").getAsString());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setAp(event.getOption("ap").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setAap(event.getOption("aap").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setDp(event.getOption("dp").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setAccuracy(event.getOption("accuracy").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setEvasion(event.getOption("evasion").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setLevel(event.getOption("level").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setHp(event.getOption("hp").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setDamageReduction(event.getOption("dr").getAsInt());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setAwakening(event.getOption("awakening").getAsBoolean());
+            } catch (NullPointerException ignored) {
+            }
+
+            try {
+                playerInfo.setPlayerClass(BdoClass.parseClass(event.getOption("class").getAsString()));
+            } catch (NullPointerException ignored) {
+            }
+            playerInfo.save();
         }
 
-        try {
-            playerInfo.setCharacterName(event.getOption("charactername").getAsString());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setNote(event.getOption("note").getAsString());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setAp(event.getOption("ap").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setAap(event.getOption("aap").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setDp(event.getOption("dp").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setAccuracy(event.getOption("accuracy").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setEvasion(event.getOption("evasion").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setLevel(event.getOption("level").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setHp(event.getOption("hp").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setDamageReduction(event.getOption("dr").getAsInt());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setAwakening(event.getOption("awakening").getAsBoolean());
-        } catch (NullPointerException ignored) {
-        }
-
-        try {
-            playerInfo.setPlayerClass(BdoClass.parseClass(event.getOption("class").getAsString()));
-        } catch (NullPointerException ignored) {
-        }
-
-        playerInfo.save();
 
         response.editOriginal(new MessageBuilder(playerInfo.toEmbed()).build()).queue();
     }
